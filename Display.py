@@ -20,56 +20,44 @@ guide_text = """
 ====================================================
 
 Goal:
-  Survive the Dungeon and finish with the highest HP.
-  You start with 20 HP and face 4-card “Rooms.”
+  Get through the whole dungeon alive. You start with
+  20 HP and can never have more than 20.
 
 ----------------------------------------------------
-HOW TO PLAY
+THE DECK
 ----------------------------------------------------
-1. Draw a Room:
-   - Reveal 4 cards from the Dungeon deck.
+A standard 52-card deck without the red face cards and
+red aces (44 cards). Cards are dealt in rooms of 4.
 
-2. Choose to FIGHT or AVOID:
-   - FIGHT: Battle each card in the room one at a time.
-   - AVOID: Skip the room by placing all 4 cards at the
-     bottom of the deck.
-     *** You cannot avoid two rooms in a row! ***
-
-3. Fighting Cards:
-   - Monsters (2-10): Deal damage equal to their value.
-   - Weapons (J, Q, K): Equip them to fight stronger foes.
-   - Aces (A): Restore HP (heal amount depends on rules).
-   - Others: Handle by your game's custom rules.
-
-4. End of Dungeon:
-   - If you clear the deck → your HP is your final score.
-   - If HP drops to 0 → remaining monster values become
-     your negative score.
+  Spades, Clubs   Monsters. Damage equals the card value
+                  (J=11, Q=12, K=13, A=14).
+  Diamonds        Weapons. The value is how much damage
+                  the weapon absorbs.
+  Hearts          Potions. Restore HP equal to the value.
 
 ----------------------------------------------------
-CARD REFERENCE
+EACH ROOM
 ----------------------------------------------------
-  Card Type   | Effect
-  --------------------------------------------
-  2-10        | Monster (damage = value)
-  J           | Weapon (damage = 11)
-  Q           | Weapon (damage = 12)
-  K           | Weapon (damage = 13)
-  A           | Heal / Potion
-  ♥ ♦ (Red)   | Often healing or safe cards
-  ♣ ♠ (Black) | Often weapons or monsters
+1. A room of 4 cards is dealt.
+2. FIGHT: resolve 3 of the 4 cards, one at a time, in
+   any order. The last card stays for the next room.
+   AVOID: put all 4 cards on the bottom of the deck.
+   You cannot avoid two rooms in a row.
+3. Equipping a weapon replaces the old one. A weapon can
+   only be used on a monster weaker than the last one it
+   killed. Otherwise you fight bare-handed and take the
+   full damage.
+4. Only the first potion in a room heals. A second one
+   in the same room is wasted.
 
 ----------------------------------------------------
-TURN SUMMARY
+THE END
 ----------------------------------------------------
-1. Draw a new room (4 cards)
-2. Choose: FIGHT or AVOID
-3. Resolve the cards
-4. Manage HP and weapon
-5. Continue until deck empty or HP ≤ 0
+Clear the dungeon: your score is your HP, plus a potion
+left in the final room.
+Reach 0 HP: your score is your HP minus the value of
+every monster still in the deck.
 
-====================================================
-        Survive, adapt, and escape the dungeon.
 ====================================================
 PRESS ENTER TO EXIT
 """
@@ -91,6 +79,16 @@ def print_deck_basic(deck):
     print(line_sep)
     for i, card in enumerate(deck):
         print(f"{i + 1}: {card}")
+
+
+def print_result(state: GameState):
+    print(line_sep)
+    if state.HP > 0:
+        print(f"You cleared the dungeon with {state.HP} HP. Score: {state.score}")
+    else:
+        print(f"You died in the dungeon. Score: {state.score}")
+    print(line_sep)
+    input("Press Enter to return to the menu...")
 
 
 def print_room_menu():

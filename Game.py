@@ -3,10 +3,6 @@ from Cards import Card, Suit
 import Display
 import Handling
 
-def risk_earnings(score: int):
-    pass
-
-
 def win_condition(state: GameState):
     score = state.HP
     for card in state.room:
@@ -30,10 +26,8 @@ def equip_weapon(state: GameState, card: Card) -> None:
 
 def drink_potion(state: GameState, card: Card) -> None:
     if state.can_drink_potion:
-        if state.HP + card.value > 20:
-            state.HP = 20
-        else:
-            state.HP += card.value
+        state.HP = min(20, state.HP + card.value)
+        state.can_drink_potion = False
     else:
         print("***You can't drink two potions in the same room!***")
 
@@ -113,6 +107,7 @@ def game_loop(state: GameState) -> None:
 
         if len(state.main_deck) < 4:
             win_condition(state)
+            Display.print_result(state)
             return
 
         while len(state.room) < 4:
@@ -124,4 +119,5 @@ def game_loop(state: GameState) -> None:
         Handling.menu_input(Handling.COMMANDS_room, state)
 
         if state.HP < 1:
+            Display.print_result(state)
             return
