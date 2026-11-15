@@ -56,7 +56,7 @@ class Deck:
         self.cards = deque(
             card
             for card in self.cards
-            if not (card.suit in ("H", "D") and card.rank in ("J", "Q", "K", "A"))
+            if not (card.suit in (Suit.HEARTS, Suit.DIAMONDS) and card.rank in ("J", "Q", "K", "A"))
         )
 
     def shuffle(self):

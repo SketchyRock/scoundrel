@@ -1,72 +1,56 @@
 # scoundrel-game
-> A classic dungeon-crawler card game implemented in Python.
 
-Scoundrel is a solo card game where you navigate a dungeon using a standard deck of cards. This terminal-based version brings the strategic depth of the physical game to your command line.
+A terminal version of Scoundrel, the solo dungeon-crawling card game played with a standard deck of cards. You start with 20 HP, fight through the deck room by room, and try to get out alive.
 
----
+## Running it
 
-## Features
-* **Dungeon Logic:** Full implementation of Scoundrel rules (Monsters, Weapons, Potions).
-* **Terminal Interface:** Play directly in your command line with real-time game state updates.
-* **Lightweight:** No heavy dependencies—runs on standard Python 3.
+You need Python 3.10 or newer. There are no dependencies.
 
----
-
-## Setup & Installation
-
-### 1. Prerequisites
-* Ensure you have **Python 3.8** or higher installed.
-* Check your version by running:
-  ```bash
-  python --version
-  ```
-
-### 2. Clone the Project
 ```bash
-git clone [https://github.com/SketchyRock/scoundrel-game.git](https://github.com/SketchyRock/scoundrel-game.git)
-cd scoundrel
-```
-
----
-
-## How to Run
-
-### Option A. Standard Execution
-```bash
+git clone https://github.com/SketchyRock/scoundrel-game.git
+cd scoundrel-game
 python3 Main.py
 ```
 
-### Option B. Virtual Environment
+The main menu has three options: start a game, read the in-game guide, or exit.
 
-```bash
-# Create the environment
-python -m venv venv
+## How to play
 
-# Activate it (Windows)
-.\venv\Scripts\activate
+The deck is a standard 52-card deck without the red face cards and red aces, which leaves 44 cards. They are dealt in rooms of four.
 
-# Activate it (macOS/Linux)
-source venv/bin/activate
+| Cards | Role | Effect |
+|---|---|---|
+| Spades and clubs | Monsters | Damage equal to the card value (J=11, Q=12, K=13, A=14) |
+| Diamonds | Weapons | The value is how much damage the weapon absorbs |
+| Hearts | Potions | Restore HP equal to the value, up to 20 |
 
-# Run the game
-python Main.py
-```
+In each room you either fight or avoid.
 
----
+- **Fight.** Resolve three of the four cards, one at a time and in any order. The last card stays for the next room.
+- **Avoid.** Put all four cards on the bottom of the deck. You can't avoid two rooms in a row.
+- **Weapons.** Equipping one replaces the old weapon. It can only be used on a monster weaker than the last one it killed. Otherwise you take the full damage.
+- **Potions.** Only the first potion in a room heals. A second one in the same room is wasted.
 
-## How to Play
-Scoundrel is played with a 52-card deck.
+If you clear the dungeon, your score is your HP plus a potion left in the final room. If you reach 0 HP, your score is your HP minus the value of every monster still in the deck.
 
-* **Spades & Clubs:** Monsters (Values 2-14, where Jacks=11, Queens=12, Kings=13, Aces=14).
-* **Diamonds:** Weapons.
-* **Hearts:** Potions.
+## Project layout
 
-The goal is to survive the dungeon with as much health as possible by strategically choosing which cards to fight and which to consume.
+| File | Purpose |
+|---|---|
+| `Main.py` | Entry point and main menu loop |
+| `Game.py` | Game rules: fighting, avoiding, weapons, potions, scoring |
+| `Cards.py` | `Card`, `Suit`, and `Deck` |
+| `GameState.py` | HP, weapon, room, and decks for one run |
+| `Handling.py` | Input handling and menu commands |
+| `Display.py` | Menus, the room display, and the in-game guide |
 
----
+## Roadmap
+
+- Track wins, losses, and monsters slain across runs, saved to a file
+- A stats screen
+- Risk your score from a run for a bigger reward on the next one
+- A classic mode, and a roguelite mode where score is currency
 
 ## License
 
-This project is open-source and available under the MIT License.
-
-Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software.
+MIT. See [LICENSE](LICENSE).

@@ -1,16 +1,22 @@
 from sys import exit
 import Game
-
-# from GameState import GameState
 import Display
+
+def show_guide(state) -> None:
+    Display.print_full_guide()
+
+
+def quit_game(state) -> None:
+    exit()
+
 
 COMMANDS_main = {
     "1": Game.game_loop,
     "start": Game.game_loop,
-    "2": Display.print_full_guide,
-    "guide": Display.print_full_guide,
-    "3": exit,
-    "exit": exit,
+    "2": show_guide,
+    "guide": show_guide,
+    "3": quit_game,
+    "exit": quit_game,
 }
 
 COMMANDS_room = {
@@ -30,20 +36,11 @@ def card_selection() -> int:
     return int(option)
 
 
-def menu_input(commands, state=None):
+def menu_input(commands, state) -> None:
     option = input("SELECT: ").strip().lower()
 
     while option not in commands:
         print("ERROR: Invalid Input")
         option = input("SELECT: ").strip().lower()
 
-    while True:
-        func = commands.get(option)
-        if func:
-            if state is not None:
-                func(state)
-            else:
-                func()
-            break
-        else:
-            print("ERROR: function not found")
+    commands[option](state)
