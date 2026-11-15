@@ -1,4 +1,4 @@
-# scoundrel-game
+# scoundrel
 
 A terminal version of Scoundrel, the solo dungeon-crawling card game played with a standard deck of cards. You start with 20 HP, fight through the deck room by room, and try to get out alive.
 
@@ -7,8 +7,8 @@ A terminal version of Scoundrel, the solo dungeon-crawling card game played with
 You need Python 3.10 or newer. There are no dependencies.
 
 ```bash
-git clone https://github.com/SketchyRock/scoundrel-game.git
-cd scoundrel-game
+git clone https://github.com/SketchyRock/scoundrel.git
+cd scoundrel
 python3 Main.py
 ```
 
